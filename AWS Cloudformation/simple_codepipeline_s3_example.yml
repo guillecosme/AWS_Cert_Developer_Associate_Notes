@@ -44,6 +44,25 @@
         AliasName: !Sub "alias/${CodePipelineName}"
         TargetKeyId: !Ref KmsKey
 
+    S3ArtifactBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: Private
+        BucketName: !Ref S3ArtifactoryStoreName
+        VersioningConfiguration:
+          Status: Enabled
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                KMSMasterKeyID: !Sub 'arn:aws:kms:${AWS::Region}:${AWS::AccountId}:${KmsKeyAlias}'
+                SSEAlgorithm: 'aws:kms'
+        Tags:
+          - Key: Owner
+            Value: !Ref OwnerKeyTag
+          - Key: Description
+            Value: !Ref DescriptionKeyTag
+
+
   Outputs:
     KmsKeyAlias:
       Description: KmsKeyAlias
@@ -52,6 +71,10 @@
     KmsKey:
       Description: KmsKey
       Value: !Ref KmsKey
+
+    S3ArtifactBucket:
+      Description: S3ArtifactBucket
+      Value: !Ref S3ArtifactBucket
     
 
 

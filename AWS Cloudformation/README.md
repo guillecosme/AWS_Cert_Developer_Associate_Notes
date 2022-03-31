@@ -39,6 +39,8 @@ O Cloud Formation é uma ferramenta muito versátil e poderosa pois permite o pr
 
 - [AWS Cloud Formation User Guide](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 
+- [Procurar por <b>Template Reference:<b>](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-reference.html)
+
 
 # Example Básico de um primeiro template para provisionar um Bucket S3 e uma Instância EC2
 
@@ -130,3 +132,7 @@ Para criar um alias para um chave KMS existe um padrão para a propriedade <b>Al
 [Documentação Oficial](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-kms-alias.html#cfn-kms-alias-targetkeyid)
 
 [Igual este exemplo no template da criação da pipeline](./simple_codepipeline_s3_example.ymlsimple_codepipeline_s3_example.yml)
+
+[Documentação nteressante para padrões de Bucket S3](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-s3.html)
+
+[Exemplo útil de criação de Bucket Criptografado](https://github.com/getcft/aws-encrypted-s3-cf-template/blob/master/encrypted-s3-cf-template.yml)
