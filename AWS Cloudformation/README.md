@@ -121,3 +121,12 @@ Fn::Cidr
 - Cloud Formation INIT
 - Change Sets
 - Custom Resources
+
+
+### Dicas interessantes
+
+Para criar um alias para um chave KMS existe um padrão para a propriedade <b>AliasName<b>, o campo sempre deverá ser escrito como: alias/"Seu_Nome_Aqui".
+
+[Documentação Oficial](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-kms-alias.html#cfn-kms-alias-targetkeyid)
+
+[Igual este exemplo no template da criação da pipeline](./simple_codepipeline_s3_example.ymlsimple_codepipeline_s3_example.yml)

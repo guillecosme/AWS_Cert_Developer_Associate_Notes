@@ -1,0 +1,60 @@
+  Parameters:  
+    CodePipelineName:
+      Type: String
+      Description: Write down the name of your pipeline
+
+    S3ArtifactoryStoreName:
+      Type: String
+      Description: Write down the name of the AWS Bucket that will store the pipeline artifacts
+
+    OwnerKeyTag:
+      Type: String
+      Description: write down the name value for the OWNER key tag
+
+    DescriptionKeyTag:
+      Type: String
+      Description: Explain the main objective/intends of this pipeline
+
+  Resources:
+    KmsKey:
+      Type: AWS::KMS::Key
+      Properties:
+        Description: Key used by Codepipeline to crytp/decrypt the S3 Bucket Artifact Bucket
+        EnableKeyRotation: true
+        Enabled: true
+        KeyPolicy:
+          Version: 2012-10-17
+          Id: ArtifactBucket-S3
+          Statement:
+            - Sid: Enable Use of the key for the template account
+              Effect: Allow
+              Principal: 
+                AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+              Action: 'kms:*'
+              Resource: '*'
+        Tags:
+          - Key: Owner
+            Value: !Ref OwnerKeyTag
+          - Key: Description
+            Value: !Ref DescriptionKeyTag
+
+    KmsKeyAlias:
+      Type: AWS::KMS::Alias
+      Properties:
+        AliasName: !Sub "alias/${CodePipelineName}"
+        TargetKeyId: !Ref KmsKey
+
+  Outputs:
+    KmsKeyAlias:
+      Description: KmsKeyAlias
+      Value: !Ref KmsKeyAlias
+
+    KmsKey:
+      Description: KmsKey
+      Value: !Ref KmsKey
+    
+
+
+    
+
+    
