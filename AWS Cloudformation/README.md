@@ -120,9 +120,27 @@ Fn::Cidr
 
 - Nested Stacks: Como melhor prática de arquitetura é sempre recomendável dividir os recursos da sua stack em domínios (sempre levar em consideração também que cada stack só permite a criação de 500 recursos). Com isto é possível criar uma Nested Stack, ou uma stakc com várias Stacks.
 
-- Cloud Formation INIT
-- Change Sets
-- Custom Resources
+- Cross Stack References: é um recurso do cloudo formation onde você pode por exemplo passar um Output de uma Stack para outra Stack como parâmetro. Neste sentido, por padrão uma Stack não pode ver os outputs de outra (isso acontece somente com Nested Stacks). Então esse processo é realizado através do Export Value e depois o Import Value. Este recurso é regional, e cada recurso n lista de Export deve ser único. O ponto cahave para entender o conceito é que com o Exmport/Import você pode compartilhar e utilizar recursos entre diversos template/stack.
+
+- Stack Sets: Possibilita criar recursos em diversas contas da AWS de uma maneira mais simples, utilizando o mesmo template. Cada Stack Set coontém vários Stack Instances, que na verdade são versões da Stack Set rodando em diferentes contas. Uma Stack Instance sempre referencia um StackSet. O template para criar uma StackSet é um template padrão, nada muda em relação a isso.
+
+- Deletion Policy: É uma feature da Cloudformation para estabelecer a ordem a de deleção de recursos físicos representados por um template. A deletion policy permite estabelecer algumas políticase comportamentos para determinados tipos de recurso. ISto pode evitar a perda de dados sensíveis caso uma Stack seja deletada indevidamente. Por exemplo no Bucket S3 é possível colocar o valor Retain nesta propriedade, isto significa que mesmo que a stack seja deletaada o recurso, Bucket S3, não será deletado. Não são todos os recursos que suportam a Deletion Policy.
+
+- Stack Roles: Como todo template de fato cria recursos físicos, para o CloudFormation funcionar você sempre precisára de permissões IAM para Criar/Atualizar/Deletar esses recursos. Normalmente é garantido pelo CloudFormation Roles, onde basicamente o template assume este role temporariamente, somente aos recursos lógicos/físicos descritos no template da Stack. É uma ferramenta poderosa que garante o mínimo privilégio possível para o gerenciamento dos recursos.
+
+- Cloud Formation INIT: Esta é uma feature muito interessante que possibilita passar configurações de incializações (Init Config) para instâncias EC2. Você basicamente define o estado que você quer que a instância seja entregue. Ele só roda uma vez, na primeira vez que a instância é criada, caso ela seja alterada via template do Cloudformation o cfn-init não roda novamente.
+
+- Cloud Formation HUP: Possibilita re-executar scripts toda vez que o recurso é alterado via template do Cloud Fomration, ao identificar uma mudança você pode indicar que, por exemplo, o Cloud Formation Init seja executado novamente.
+
+- Change Sets: Feature que garante o estado dos recursos físicos criados a partir de um template do Cloud Formation. Toda vez que um recurso do template é alterado podemos ter três estados diferentes:
+
+  - No interruption
+  - Some interruption
+  - Replacement
+
+  O change set permite a riaçaõ de várias versões de um mesmo template e aplicar as configurações de acordo com as versão que você quer (se assimila muito com o Git). A change Set basicamente simplesmente cria uma visão com  a diferença dos recursos alterados de um template para o outro e deixa você revisar e seguir em frente com a alteração.
+
+- Custom Resources: A custom resource permite você criar um recurso que propriedades que nativamente o Cloud Formation ainda não suporta. Normalmente é utilizado em conjunto com lambda para construir os recursos. Sempre pensar no exemplo onde você tenta deletar uma Stack de um buckt criado, onde este bucket já possui objetos. A satck irá falhar. Olhar o template do VPC Endpoints (Itaú. Ver bastante exemplos disso)
 
 
 ### Dicas interessantes

@@ -62,6 +62,27 @@
           - Key: Description
             Value: !Ref DescriptionKeyTag
 
+    CodePipelineWebHook:
+      Type: AWS::CodePipeline::Webhook
+      Properties:
+        Filters:
+          - JsonPath:  "$.ref"
+        Authentication: GITHUB_HMAC
+        AuthenticationConfiguration:
+          SecretToken: !Ref SecretToken
+        TargetPipeline: !Ref AWSCodePipeline
+        TargetAction: Source
+        TargetPipelineVersion: !GetAtt AWSCodePipeline.Version
+    
+    AWSCodePipeline:
+      Type: AWS::CodePipeline::Pipeline
+      Properties:
+        RoleArn: 
+        Stages:
+          - Actions:
+            - Name: 
+            Name: 
+
 
   Outputs:
     KmsKeyAlias:
