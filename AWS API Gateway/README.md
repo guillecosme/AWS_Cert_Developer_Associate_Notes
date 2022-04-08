@@ -2,15 +2,16 @@
 
 O API gateway é o serviço que permite realizar a criação de API na estrutura da AWS, expor essas API's publicamente e integrar essas API's com outros serviços da AWS.
 
-- REST API
-- Socket API
+- REST/ RESTFul API (representaional state transfer)
+- Socket API:
+- SOAP (Simple Object Access Protocol) API: define uma maneira/linguagem de comunicação para a API, normalmente baseada em XML
 
 Os tipos de recurso normalmente são os mesmos métodOs utilizados no protocolo HTTP:
 
     - POST
     - GET
     - DELETE
-    - UPDATE
+    - PUT
 
 - URL de invcação: é o ponto de entrada para acessar os enpoints/recursos da API criada e publicada através do API Gateway. Esta URL é composta de algumas informações importantes;
 
